@@ -1,0 +1,42 @@
+﻿@using Visitingcardgenerator.Models
+@model IEnumerable<Visitingcardgenerator.Models.UploadHistory>
+
+<h2>Uploaded Data</h2>
+
+@if (TempData["Success"] != null)
+{
+    <p style="color:green">@TempData["Success"]</p>
+}
+
+@if (TempData["Error"] != null)
+{
+    <p style="color:red">@TempData["Error"]</p>
+}
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Date</th>
+        <th>Bank</th>
+        <th>File</th>
+        <th>No of Records</th>
+        <th>Status</th>
+        <th>Download</th>
+    </tr>
+
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.UploadDate.ToString("dd-MM-yyyy HH:mm")</td>
+                <td>@item.BankName</td>
+                <td>@item.FileName</td>
+                <td>@item.TotalRecords</td>
+                <td>@item.Status</td>
+                <td>
+                    <a asp-controller="Upload" asp-action="Download" asp-route-id="@item.Id">Download</a>
+                </td>
+            </tr>
+        }
+    }
+</table>

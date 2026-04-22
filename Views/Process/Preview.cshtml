@@ -1,0 +1,48 @@
+﻿@model List<Visitingcardgenerator.Models.CustomerInfo>
+
+<div class="container mt-4">
+
+    <h2 class="text-primary mb-4">📇 Processed Data</h2>
+
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow h-100 border-0">
+
+                    <div class="card-body">
+
+                        <!-- NAME -->
+                        <h5 class="text-primary fw-bold text-center mb-3">
+                            @item.FullName
+                        </h5>
+
+                        <!-- DETAILS -->
+                        <div class="text-start" style="font-size:14px; line-height:1.6;">
+                            <p class="mb-1"><strong>Designation:</strong> @item.Designation</p>
+                            <p class="mb-1"><strong>Phone:</strong> @item.Phone</p>
+                            <p class="mb-1"><strong>Email:</strong> @item.Email</p>
+                            <p class="mb-2"><strong>Address:</strong> @item.Address</p>
+                        </div>
+
+                        <!-- QR CODE -->
+                        <div class="text-center mt-3">
+                            @if (!string.IsNullOrEmpty(item.QRCodeImage))
+                            {
+                                <img src="@item.QRCodeImage"
+                                     style="width:140px;height:140px;object-fit:contain;" />
+                            }
+                            else
+                            {
+                                <p class="text-danger">QR not generated</p>
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
