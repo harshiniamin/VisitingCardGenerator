@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "Upload Files";
+}
+
+<div class="container mt-4">
+
+    <h2 class="text-primary mb-4">📤 Upload Excel File</h2>
+
+    <div class="card shadow p-4 mb-4">
+        <form method="post" enctype="multipart/form-data" asp-controller="Upload" asp-action="UploadExcel">
+
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <label class="form-label fw-bold">Select Bank</label>
+                    <select name="bankId" class="form-select">
+                        @foreach (var b in ViewBag.Banks)
+                        {
+                            <option value="@b.BankId">@b.BankName</option>
+                        }
+                    </select>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-bold">Choose Excel File</label>
+                    <input type="file" name="file" class="form-control" />
+                </div>
+
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-success w-100">
+                        Upload
+                    </button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+    <h4 class="text-secondary mb-3">📄 Recent Uploads</h4>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Bank</th>
+                    <th>File</th>
+                    <th>Records</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in ViewBag.Uploads)
+                {
+                    <tr>
+                        <td>@item.UploadDate.ToString("dd-MM-yyyy HH:mm")</td>
+                        <td>@item.BankName</td>
+                        <td>@item.FileName</td>
+                        <td>@item.TotalRecords</td>
+
+                        <td>
+                            @if (item.Status == "New")
+                            {
+                                <span class="badge bg-warning text-dark">New</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">Processed</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

@@ -1,0 +1,97 @@
+﻿@model List<Visitingcardgenerator.Models.UploadHistory>
+
+<div class="container mt-4">
+
+    <h2 class="text-primary mb-4">⚙️ Process Files</h2>
+
+    <!-- FILTER CARD -->
+    <div class="card shadow p-3 mb-4">
+        <form method="get" class="row g-3">
+
+            <div class="col-md-3">
+                <label class="form-label fw-bold">From Date</label>
+                <input type="date" name="fromDate" class="form-control" />
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label fw-bold">To Date</label>
+                <input type="date" name="toDate" class="form-control" />
+            </div>
+
+            <div class="col-md-3">
+                <label class="form-label fw-bold">Status</label>
+                <select name="status" class="form-select">
+                    <option value="">All</option>
+                    <option value="New">New</option>
+                    <option value="Processed">Processed</option>
+                </select>
+            </div>
+
+            <div class="col-md-3 d-flex align-items-end">
+                <button class="btn btn-primary w-100">Filter</button>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- TABLE -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover text-center">
+            <thead class="table-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>File</th>
+                    <th>Bank</th>
+                    <th>Records</th>
+                    <th>Status</th>
+                    <th>Process</th>
+                    <th>Download</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.UploadDate.ToString("dd-MM-yyyy HH:mm")</td>
+                        <td>@item.FileName</td>
+                        <td>@item.BankName</td>
+                        <td>@item.TotalRecords</td>
+
+                        <td>
+                            @if (item.Status == "New")
+                            {
+                                <span class="badge bg-warning text-dark">New</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-success">Processed</span>
+                            }
+                        </td>
+
+                        <td>
+                            @if (item.Status == "New")
+                            {
+                                <a class="btn btn-sm btn-warning"
+                                       href="/Process/ProcessFile/@item.Id">
+                                    Process
+                                </a>
+                            }
+                        </td>
+
+                        <td>
+                            @if (item.Status == "Processed")
+                            {
+                                <a class="btn btn-sm btn-success"
+                                       href="/Process/Preview/@item.Id">
+                                    Download
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
